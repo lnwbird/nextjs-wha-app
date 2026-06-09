@@ -19,7 +19,7 @@ export default function ApiCoursePage() {
           <MethodBadge method="GET" />
           <code className="font-mono text-sm font-medium">/api/courses</code>
           <span className="text-sm text-muted-foreground ml-auto">List all courses</span>
-        </div}
+        </div>
 
         <div className="space-y-6">
           <h2 className="font-heading text-[22px] font-semibold leading-[1.3]">Parameters</h2>
@@ -45,8 +45,8 @@ export default function ApiCoursePage() {
                 </tr>
               </tbody>
             </table>
-          </div}
-        </div}
+          </div>
+        </div>
 
         <div className="space-y-4">
           <h2 className="font-heading text-[22px] font-semibold leading-[1.3]">Example Request</h2>
@@ -54,7 +54,7 @@ export default function ApiCoursePage() {
             code={`curl -X GET "https://api.example.com/api/courses?page=1&limit=10" \
   -H "Authorization: Bearer YOUR_TOKEN"`}
           />
-        </div}
+        </div>
 
         <div className="space-y-4">
           <h2 className="font-heading text-[22px] font-semibold leading-[1.3]">Example Response</h2>
@@ -76,7 +76,7 @@ export default function ApiCoursePage() {
   }
 }`}
           />
-        </div}
+        </div>
       </section>
 
       <section className="pt-12 border-t space-y-6">
