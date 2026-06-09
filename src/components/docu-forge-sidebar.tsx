@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Input } from "./input";
+import { Input } from "@/components/ui/input";
 
 const NAVIGATION_METADATA = [
   {
