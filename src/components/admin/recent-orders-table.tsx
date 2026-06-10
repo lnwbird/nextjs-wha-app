@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { 
   Table, 
@@ -9,11 +11,6 @@ import {
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
 import { AdminOrderItem } from "@/types/admin";
-import { 
-  FiCheckCircle, 
-  FiClock, 
-  FiXCircle 
-} from "react-icons/fi";
 
 type RecentOrdersTableProps = {
   orders: AdminOrderItem[];

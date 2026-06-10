@@ -1,13 +1,8 @@
+"use client";
+
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { 
-  ArrowUpRight, 
-  Users, 
-  Package, 
-  ShoppingCart, 
-  CreditCard, 
-  Clock 
-} from "remixicon";
+import { cn } from "@/lib/utils";
 
 type KpiCardProps = {
   title: string;
@@ -16,6 +11,7 @@ type KpiCardProps = {
   trend?: string;
   trendUp?: boolean;
   loading?: boolean;
+  error?: string | null;
 };
 
 export const KpiCard = ({ 
@@ -24,9 +20,21 @@ export const KpiCard = ({
   icon: Icon, 
   trend, 
   trendUp, 
-  loading 
+  loading,
+  error
 }: KpiCardProps) => {
   if (loading) return <KpiCardSkeleton />;
+
+  if (error) {
+    return (
+      <Card className="p-6 flex items-center justify-between">
+        <div className="text-destructive">
+          <p className="text-sm text-muted-foreground">{title}</p>
+          <p className="text-lg font-medium">{error}</p>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="p-6 flex items-center justify-between">
@@ -35,7 +43,9 @@ export const KpiCard = ({
         <h3 className="text-2xl font-bold mt-1">{value}</h3>
         {trend && (
           <div className={`flex items-center text-xs mt-2 ${trendUp ? "text-green-500" : "text-red-500"}`}>
-            <ArrowUpRight className={`mr-1 ${trendUp ? "" : "rotate-90"}`} size={14} />
+            <svg className={`mr-1 ${trendUp ? "" : "rotate-90"}`} width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <path d="M18 15l-6-6-6 6" />
+            </svg>
             {trend}
           </div>
         )}
