@@ -24,7 +24,7 @@ npx prisma db pull
 npx prisma generate
 
 # 5. check lint
-ืnpm run lint
+npm run lint
 ```
 
 ## Gotchas
