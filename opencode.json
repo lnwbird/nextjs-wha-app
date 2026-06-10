@@ -3,7 +3,7 @@
   "instructions": ["Docs/typescript-guidelines.md"],
   "mcp": {
       "next-devtools-mcp": {
-          "type": "local":
+          "type": "local",
           "command": ["npx", "-y", "next-devtools-mcp@latest"],
           "enabled": true
       }
