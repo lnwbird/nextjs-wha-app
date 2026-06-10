@@ -1,102 +1,70 @@
-"use client"
-
+import React from "react";
 import { 
   Table, 
   TableBody, 
-  TableCaption, 
   TableCell, 
   TableHead, 
   TableHeader, 
   TableRow 
-} from "@/components/ui/table"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { AdminOrderItem } from "@/types/admin"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
+import { AdminOrderItem } from "@/types/admin";
+import { 
+  FiCheckCircle, 
+  FiClock, 
+  FiXCircle 
+} from "react-icons/fi";
 
 type RecentOrdersTableProps = {
-  orders: AdminOrderItem[]
-  loading: boolean
-  error: string | null
-  onRetry: () => void
-}
+  orders: AdminOrderItem[];
+  loading?: boolean;
+  error?: string | null;
+  onRetry?: () => void;
+};
 
-export const RecentOrdersTable = ({ orders, loading, error, onRetry }: RecentOrdersTableProps) => {
-  const formatCurrency = new Intl.NumberFormat('th-TH', { 
-    style: 'currency', 
-    currency: 'THB' 
-  })
+const statusStyles = {
+  processing: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  delivered: "bg-green-100 text-green-700 border-green-200",
+  received: "bg-blue-100 text-blue-700 border-blue-200",
+};
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('th-TH', {
-      day: '2-digit',
-      month: 'short',
-      year: '2-digit'
-    })
-  }
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'completed': return 'bg-emerald-100 text-emerald-700 hover:bg-emerald-100'
-      case 'pending': return 'bg-amber-100 text-amber-700 hover:bg-amber-100'
-      case 'cancelled': return 'bg-rose-100 text-rose-700 hover:bg-rose-100'
-      default: return 'bg-slate-100 text-slate-700 hover:bg-slate-100'
-    }
-  }
-
-  if (loading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>คำสั่งซื้อล่าสุด</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-12 w-full animate-pulse bg-muted rounded-lg" />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
+export default function RecentOrdersTable({ orders, loading, error, onRetry }: RecentOrdersTableProps) {
+  if (loading) return <RecentOrdersTableSkeleton />;
 
   if (error) {
     return (
-      <Card className="flex flex-col items-center justify-center text-center p-6">
-        <CardTitle className="text-lg mb-2">ไม่สามารถโหลดข้อมูลได้</CardTitle>
-        <p className="text-muted-foreground mb-4">{error}</p>
+      <Card className="p-6 flex flex-col items-center justify-center text-center h-64">
+        <p className="text-destructive mb-4">{error}</p>
         <button 
-          onClick={onRetry}
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium"
+          onClick={onRetry} 
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm"
         >
-          ลองใหม่อีกครั้ง
+          Try Again
         </button>
       </Card>
-    )
+    );
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>คำสั่งซื้อล่าสุด</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <Card className="p-6 overflow-hidden">
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold">Recent Orders</h3>
+      </div>
+      <div className="overflow-x-auto">
         <Table>
-          <TableCaption>แสดงคำสั่งซื้อ 5 รายการล่าสุด</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead>ลูกค้า</TableHead>
-              <TableHead>วันที่</TableHead>
-              <TableHead>ยอดรวม</TableHead>
-              <TableHead className="text-right">สถานะ</TableHead>
+              <TableHead>Customer</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Date</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {orders.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4} className="text-center py-10 text-muted-foreground">
-                  ไม่พบข้อมูลคำสั่งซื้อ
+                  No recent orders found
                 </TableCell>
               </TableRow>
             ) : (
@@ -106,22 +74,38 @@ export const RecentOrdersTable = ({ orders, loading, error, onRetry }: RecentOrd
                     {order.customerName}
                   </TableCell>
                   <TableCell>
-                    {formatDate(order.createdAt)}
+                    {new Intl.NumberFormat("th-TH", { 
+                      style: "currency", 
+                      currency: "THB" 
+                    }).format(order.totalAmount)}
                   </TableCell>
                   <TableCell>
-                    {formatCurrency.format(order.totalAmount)}
+                    <span className={`px-2 py-1 rounded-full text-xs border ${statusStyles[order.status as keyof typeof statusStyles] || "bg-gray-100"}`}>
+                      {order.status}
+                    </span>
                   </TableCell>
-                  <TableCell className="text-right">
-                    <Badge variant="outline" className={cn("font-normal", getStatusColor(order.status))}>
-                      {order.status === 'completed' ? 'สำเร็จ' : order.status === 'pending' ? 'รอดำเนินการ' : 'ยกเลิก'}
-                    </Badge>
+                  <TableCell className="text-muted-foreground text-sm">
+                    {new Date(order.createdAt).toLocaleDateString("th-TH")}
                   </TableCell>
                 </TableRow>
               ))
             )}
           </TableBody>
         </Table>
-      </CardContent>
+      </div>
     </Card>
-  )
+  );
+}
+
+function RecentOrdersTableSkeleton() {
+  return (
+    <Card className="p-6">
+      <div className="h-6 w-48 bg-muted animate-pulse rounded mb-4" />
+      <div className="space-y-3">
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="h-12 w-full bg-muted animate-pulse rounded" />
+        ))}
+      </div>
+    </Card>
+  );
 }

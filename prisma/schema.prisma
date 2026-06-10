@@ -79,6 +79,7 @@ model User {
   id            String    @id
   name          String    @db.Text
   email         String
+  role          String    @default("user") @db.VarChar(20)
   emailVerified Boolean   @default(false)
   image         String?   @db.Text
   createdAt     DateTime  @default(now())

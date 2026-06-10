@@ -1,70 +1,60 @@
+import React from "react";
+import { Card } from "@/components/ui/card";
 import { 
-  TrendingUp, 
-  TrendingDown,
-  LayoutDashboard
-} from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
+  ArrowUpRight, 
+  Users, 
+  Package, 
+  ShoppingCart, 
+  CreditCard, 
+  Clock 
+} from "remixicon";
 
 type KpiCardProps = {
-  title: string
-  value: string | number
-  icon: any
-  description: string
-  trend?: {
-    value: string
-    isPositive: boolean
-  }
-  className?: string
-}
+  title: string;
+  value: string | number;
+  icon: React.ElementType;
+  trend?: string;
+  trendUp?: boolean;
+  loading?: boolean;
+};
 
-export const KpiCard = ({
-  title,
-  value,
-  icon: Icon,
-  description,
-  trend,
-  className,
+export const KpiCard = ({ 
+  title, 
+  value, 
+  icon: Icon, 
+  trend, 
+  trendUp, 
+  loading 
 }: KpiCardProps) => {
+  if (loading) return <KpiCardSkeleton />;
+
   return (
-    <Card className={cn("flex flex-col", className)}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <div className="h-4 w-4 text-muted-foreground">
-          <Icon className="h-4 w-4" />
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-        <p className="text-xs text-muted-foreground">{description}</p>
+    <Card className="p-6 flex items-center justify-between">
+      <div>
+        <p className="text-sm text-muted-foreground">{title}</p>
+        <h3 className="text-2xl font-bold mt-1">{value}</h3>
         {trend && (
-          <div className={cn(
-            "text-xs mt-1 font-medium flex items-center gap-1",
-            trend.isPositive ? "text-emerald-600" : "text-rose-600"
-          )}>
-            {trend.isPositive ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-            {trend.value}
+          <div className={`flex items-center text-xs mt-2 ${trendUp ? "text-green-500" : "text-red-500"}`}>
+            <ArrowUpRight className={`mr-1 ${trendUp ? "" : "rotate-90"}`} size={14} />
+            {trend}
           </div>
         )}
-      </CardContent>
+      </div>
+      <div className="p-3 bg-secondary rounded-xl">
+        <Icon size={24} className="text-primary" />
+      </div>
     </Card>
-  )
-}
+  );
+};
 
 export const KpiCardSkeleton = () => {
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">
-          <div className="h-4 w-24 animate-pulse bg-muted rounded" />
-        </CardTitle>
-        <div className="h-4 w-4 animate-pulse bg-muted rounded" />
-      </CardHeader>
-      <CardContent>
-        <div className="h-8 w-32 animate-pulse bg-muted rounded mb-2" />
-        <div className="h-3 w-40 animate-pulse bg-muted rounded mb-1" />
-        <div className="h-3 w-12 animate-pulse bg-muted rounded" />
-      </CardContent>
+    <Card className="p-6 flex items-center justify-between">
+      <div className="space-y-2 flex-1">
+        <div className="h-4 w-24 bg-muted animate-pulse rounded" />
+        <div className="h-8 w-32 bg-muted animate-pulse rounded" />
+      </div>
+      <div className="p-3 bg-muted animate-pulse rounded-xl w-12 h-12" />
     </Card>
-  )
-}
+  );
+};
