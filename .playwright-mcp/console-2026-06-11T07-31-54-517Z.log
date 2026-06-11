@@ -1,0 +1,9 @@
+[     279ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[     303ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[     418ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[     515ms] [LOG] [Fast Refresh] done in 202ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[   41050ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[   41096ms] [LOG] [Fast Refresh] done in 148ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  302250ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  302672ms] [LOG] [Fast Refresh] done in 537ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  304565ms] [LOG] SIGNUP_RESULT: {"token":null,"user":{"name":"Test User","email":"test-final@example.com","emailVerified":false,"image":null,"createdAt":"2026-06-11T07:36:58.815Z","updatedAt":"2026-06-11T07:36:58.815Z","role":"user","id":"NHlc82F4eCiivb1R9GuHX3ZxJ0LUsCuA"}} @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
