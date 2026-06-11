@@ -15,6 +15,19 @@ RUN npm ci && npm cache clean --force
 FROM node:24-alpine AS builder
 WORKDIR /app
 
+# Build args for environment variables needed at build time
+ARG DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
+ARG RESEND_API_KEY="dummy"
+ARG CONTACT_RECEIVER_EMAIL="dummy@example.com"
+ARG BETTER_AUTH_SECRET="dummy-secret-for-build"
+ARG BETTER_AUTH_URL="http://localhost:3000"
+
+ENV DATABASE_URL=$DATABASE_URL
+ENV RESEND_API_KEY=$RESEND_API_KEY
+ENV CONTACT_RECEIVER_EMAIL=$CONTACT_RECEIVER_EMAIL
+ENV BETTER_AUTH_SECRET=$BETTER_AUTH_SECRET
+ENV BETTER_AUTH_URL=$BETTER_AUTH_URL
+
 # คัดลอก dependencies จาก deps stage
 COPY --from=deps /app/node_modules ./node_modules
 

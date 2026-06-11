@@ -1,9 +1,12 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { unstable_noStore } from "next/cache";
+import { Suspense } from "react";
 import DashboardClient from "./dashboard-client";
 
 export default async function DashboardPage() {
+  unstable_noStore();
   const session = await auth.api.getSession({
     headers: await headers()
   });
@@ -15,6 +18,8 @@ export default async function DashboardPage() {
   // Note: role check skipped as User model in prisma/schema.prisma doesn't have role field
   // In a real scenario, we would check session.user.role === 'admin'
   return (
-    <DashboardClient initialSessionUser={session.user} />
+    <Suspense fallback={<div className="p-6 animate-pulse">Loading dashboard...</div>}>
+      <DashboardClient initialSessionUser={session.user} />
+    </Suspense>
   );
 }

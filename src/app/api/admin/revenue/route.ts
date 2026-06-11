@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import prisma from "@/lib/prisma";
 
 export async function GET(request: Request) {
@@ -7,12 +8,12 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const period = searchParams.get("period") || "30d";
     
-    const session = await auth.api.getSession();
-    if (!session || (session.user as any).role !== "admin") {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session || session.user.role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    let startDate = new Date();
+    const startDate = new Date();
     if (period === "7d") startDate.setDate(startDate.getDate() - 7);
     else if (period === "90d") startDate.setDate(startDate.getDate() - 90);
     else startDate.setDate(startDate.getDate() - 30);

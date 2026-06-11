@@ -15,12 +15,15 @@ import {
   KpiCardSkeleton 
 } from "@/components/admin/kpi-card"
 import { PeriodSelector } from "@/components/admin/period-selector"
-import { RecentOrdersTable } from "@/components/admin/recent-orders-table"
 import { AdminStats, RevenuePoint, AdminOrderItem } from "@/types/admin"
 
-const RevenueChart = dynamic(() => import("@/components/admin/revenue-chart").then(mod => mod.RevenueChart), { 
+const RevenueChart = dynamic(() => import("@/components/admin/revenue-chart").then(mod => mod.default), { 
   ssr: false,
   loading: () => <div className="h-[400px] w-full animate-pulse bg-muted rounded-lg" />
+})
+
+const RecentOrdersTable = dynamic(() => import("@/components/admin/recent-orders-table").then(mod => mod.default), {
+  ssr: false
 })
 
 type DashboardClientProps = {
@@ -134,34 +137,34 @@ export default function DashboardClient({ initialSessionUser }: DashboardClientP
             </button>
           </div>
         ) : (
-          <>
+<>
             <KpiCard 
-              title="ยอดขายวันนี้" 
+              title="�ʹ����ѹ���" 
               value={formatCurrency.format(stats?.todaySales || 0)} 
               icon={DollarSign} 
-              description="ยอดขายรวมของวันนี้"
-              trend={{ value: "+12.5%", isPositive: true }}
+              trend="+12.5%"
+              trendUp={true}
             />
             <KpiCard 
-              title="คำสั่งซื้อวันนี้" 
+              title="����觫����ѹ���" 
               value={stats?.todayOrders || 0} 
               icon={ShoppingBag} 
-              description="จำนวนออเดอร์วันนี้"
-              trend={{ value: "+5.4%", isPositive: true }}
+              trend="+5.4%"
+              trendUp={true}
             />
             <KpiCard 
-              title="รอส่งสินค้า" 
+              title="�����Թ���" 
               value={stats?.pendingOrders || 0} 
               icon={Clock} 
-              description="ออเดอร์ที่ต้องจัดส่ง"
-              trend={{ value: "-2.1%", isPositive: false }}
+              trend="-2.1%"
+              trendUp={false}
             />
             <KpiCard 
-              title="ผู้ใช้ทั้งหมด" 
+              title="����������" 
               value={stats?.totalUsers || 0} 
               icon={Users} 
-              description="จำนวนสมาชิกในระบบ"
-              trend={{ value: "+1.2%", isPositive: true }}
+              trend="+1.2%"
+              trendUp={true}
             />
           </>
         )}

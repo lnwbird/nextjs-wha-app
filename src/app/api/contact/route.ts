@@ -2,9 +2,15 @@ import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import { contactSchema } from '@/lib/validations/contact';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request): Promise<NextResponse> {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  if (!resendApiKey) {
+    return NextResponse.json({
+      success: false,
+      error: 'Email service not configured'
+    }, { status: 503 });
+  }
+  const resend = new Resend(resendApiKey);
   try {
     const body = await req.json();
     const result = contactSchema.safeParse(body);
