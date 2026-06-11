@@ -5,7 +5,7 @@ on:
     branches:
       - 'feature-**'
 
-job:
+jobs:
   lint-job:
     runs-on: ubuntu-latest
     steps:
