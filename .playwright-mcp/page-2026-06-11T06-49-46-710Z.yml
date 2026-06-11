@@ -1,0 +1,30 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: สมัครสมาชิก
+      - generic [ref=e6]: กรอกข้อมูลด้านล่างเพื่อสร้างบัญชีใหม่
+    - generic [ref=e9]:
+      - group [ref=e10]:
+        - generic [ref=e11]: ชื่อ
+        - textbox "ชื่อ" [ref=e12]:
+          - /placeholder: สมชาย ใจดี
+      - group [ref=e13]:
+        - generic [ref=e14]: อีเมล
+        - textbox "อีเมล" [ref=e15]:
+          - /placeholder: you@example.com
+      - group [ref=e16]:
+        - generic [ref=e17]: รหัสผ่าน
+        - textbox "รหัสผ่าน" [ref=e18]:
+          - /placeholder: ••••••••
+      - group [ref=e19]:
+        - generic [ref=e20]: ยืนยันรหัสผ่าน
+        - textbox "ยืนยันรหัสผ่าน" [ref=e21]:
+          - /placeholder: ••••••••
+    - generic [ref=e22]:
+      - button "สมัครสมาชิก" [ref=e23]
+      - paragraph [ref=e24]:
+        - text: มีบัญชีอยู่แล้ว?
+        - link "เข้าสู่ระบบ" [ref=e25] [cursor=pointer]:
+          - /url: /login
+  - button "Open Next.js Dev Tools" [ref=e31] [cursor=pointer]:
+    - img [ref=e32]
